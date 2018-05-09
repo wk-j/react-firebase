@@ -18,6 +18,21 @@ type State = {
 
 class App extends React.Component<{}, {}> {
 
+    db = "datas"
+
+    constructor(props) {
+        super(props)
+
+        let ref = firebase.database().ref(this.db)
+        ref.on("value", snapshot => {
+            // console.log(snapshot.val());
+        });
+
+        ref.on("child_added", snapshot => {
+            console.log(snapshot.val());
+        })
+    }
+
     componentDidMount() {
 
     }
@@ -29,10 +44,10 @@ class App extends React.Component<{}, {}> {
     }
 
     click = (e) => {
-        let ref = firebase.database().ref("/datas")
+        let ref = firebase.database().ref(this.db)
         ref.push({
             id: 1,
-            value: 100
+            status: "Init"
         })
     }
 
